@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: multi-service-application
+  name: multi-service-application
+  namespace: default
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      run: multi-service-application
+  template:
+    metadata:
+      labels:
+        run: multi-service-application
+    spec:
+      containers:
+      - image: ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
+        name: multi-service-application
+        args: ["--spring.application.json=\\\"{\\\"messages_config\\\":$(BINDING_1},\\\"database_config\\\":$(BINDING_2}"]
+        env:
+        - name: BINDING_1
+          valueFrom:
+            secretKeyRef:
+              name: binding-hosted-message-service
+              key: binding
+        - name: BINDING_2
+          valueFrom:
+            secretKeyRef:
+              name: binding-spring-boot-db2
+              key: binding
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    run: multi-service-application
+  name: multi-service-application-port
+  namespace: default
+spec:
+  selector:
+    run: multi-service-application
+  ports:
+    - port: 8080
+      name: http
