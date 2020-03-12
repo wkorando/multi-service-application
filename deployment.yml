@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -19,7 +19,7 @@ spec:
       containers:
       - image: ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
         name: multi-service-application
-        args: ["--spring.application.json=\\\"{\\\"messages_config\\\":$(BINDING_1},\\\"database_config\\\":$(BINDING_2}"]
+        args: ["--spring.application.json={\"messages_config\":$(BINDING_1),\"database_config\":$(BINDING_2)}"]
         env:
         - name: BINDING_1
           valueFrom:

@@ -2,7 +2,7 @@ version: '2'
 messages:
   $i18n: locales.yml
 template:
-  name: "Produce Service Toolchain"
+  name: "Multi Service Application Toolchain"
   description: "Toolchain for building and deploying the produce service spring boot app onto kubernetes"
   required:
     - repo
@@ -23,16 +23,6 @@ services:
       type: clone
       has_issues: false
       enable_traceability: false
-  artifact_repo:
-    service_id: artifactory
-    parameters:
-      name: 'workshop_artifactory'
-      dashboard_url: 'url_to_your_artifactory_instance/artifactory'
-      type: maven
-      user_id: 'admin'
-      token: 'changeit'
-      release_url: 'url_to_your_artifactory_instance/artifactory/libs_release'
-      snapshot_url: 'url_to_your_artifactory_instance/artifactory/libs_snapshot'
   # Pipelines
   build:
     service_id: pipeline
