@@ -9,7 +9,7 @@ template:
     - build
 
 toolchain:
-  name: produce-service-toolchain
+  name: multi-service-application-toolchain
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted"
@@ -18,8 +18,8 @@ services:
   repo:
     service_id: hostedgit
     parameters:
-      repo_url: 'https://github.com/wkorando/cnsd-produce-service'
-      repo_name: 'produce-service'
+      repo_url: 'https://github.com/wkorando/multi-service-application'
+      repo_name: 'multi-service-application'
       type: clone
       has_issues: false
       enable_traceability: false
@@ -58,7 +58,7 @@ services:
 form:
   pipeline:
     parameters:
-      app-name: produce-service
+      app-name: multi-service-application
       prod-cluster-namespace: default
     schema:
       $ref: deploy.json
